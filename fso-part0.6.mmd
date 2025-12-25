@@ -1,0 +1,17 @@
+sequenceDiagram
+    participant browser
+    participant server
+
+    Note right of browser: User types a new note into the text field and clicks the "Save" button
+
+    Note right of browser: Browser executes the event handler in spa.js<br/>It prevents the default form submission<br/>and creates a new note object
+
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    Note right of server: Server appends the new note to the data
+    server-->>browser: 201 Created (or similar success response)
+    deactivate server
+
+    Note right of browser: Event handler adds the new note to the local list of notes<br/>and re-renders the notes on the page
+
+    Note right of browser: (Optional) The page may also re-fetch the latest data.json<br/>to ensure consistency, but the primary update is client-side
